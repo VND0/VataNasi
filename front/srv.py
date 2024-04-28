@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 
-app = Flask(__name__, template_folder="front")
+app = Flask(__name__)
 
 
 @app.route("/")
@@ -9,4 +9,4 @@ def handle_main_page():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, port=8000)
