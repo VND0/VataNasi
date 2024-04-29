@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BS</title>
+    <title>Регистрация</title>
 
     <!-- Bootstrap include TODO: На деплое добавлять локально через url_for -->
     <link href="../static/bootstrap/bootstrap.min.css" rel="stylesheet"
@@ -11,6 +11,7 @@
     <!-- Bootstrap include -->
 
     <script src="../static/script.js" defer></script> <!-- TODO: Заменить на url_for -->
+    <script src="../static/for_registration.js" defer></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary pb-0 py-0">
@@ -54,24 +55,24 @@
     </div>
 </nav>
 <div class="container">
-    <h1>VataNasi<br><small class="text-body-secondary fs-4">Просто лучший сайт для изучения иностранных слов.</small>
-    </h1>
-    <br>
-    <p class="lead">Этот сайт нужен вам, если:</p>
-    <ul>
-        <li>у вас недостаточный словарный запас;</li>
-        <li>вы стремитесь к знаниям;</li>
-        <li>ваш учитель иностранного языка угрожает вас съесть &#128128;.</li>
-    </ul>
-    <br>
-    <p class="lead">Что нужно, чтобы начать использование</p>
-    <p>
-        <code>Войдите</code> в свой аккаунт или <code>зарегистрируйте новый</code>. Вы сможете <code>добавлять
-        слова</code> в
-        собственную базу слов, объединяя
-        их в категории. Затем во вкладке <code>Новое задание</code> выберите одну или несколько категорий и тренажеры по
-        ним.
-    </p>
+    <form>
+        <div class="mb-3">
+            <label for="username" class="form-label">Имя пользователя</label>
+            <input type="text" class="form-control" id="username" aria-describedby="username-hint">
+            <div id="username-hint" class="form-text">Уникальное букво-циферное имя пользователя.</div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" class="form-control" id="password" aria-describedby="password-hint">
+            <div id="password-hint" class="form-text">Пароль может содержать любые символы.</div>
+        </div>
+        <div class="mb-3">
+            <label for="password_confirm" class="form-label">Подтвердите пароль</label>
+            <input type="password" class="form-control" id="password_confirm">
+        </div>
+        <div id="liveAlertPlaceholder"></div>
+        <button type="button" id="submit_registration" class="btn btn-primary">Зарегистрироваться</button>
+    </form>
 </div>
 </body>
 </html>
