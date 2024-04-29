@@ -1,3 +1,7 @@
+const mainPageLink = "/";
+const registerPageLink = "/register"
+const loginPageLink = "/login"
+
 function isLoggedIn() {
     return false; // TODO: Реализовать, когда будет вход
 }
@@ -17,19 +21,30 @@ function dropdownWhenLoggedIn() { //TODO: Реализовать норм ссы
     console.log("Содержимое меню аккаунта вставлено");
 }
 
-function dropdownWhenNotLoggedIn() { //TODO: Реализовать норм ссылки на кнопках.
+function dropdownWhenNotLoggedIn() {
     const parent = document.getElementById("account-dropdown-menu");
     const new_content = `<ul class="dropdown-menu">
-<li><a class="dropdown-item" href="#">Войти</a></li>
-<li><a class="dropdown-item" href="#">Зарегистрироваться</a></li>
+<li><a class="dropdown-item" href="${loginPageLink}">Войти</a></li>
+<li><a class="dropdown-item" href="${registerPageLink}">Зарегистрироваться</a></li>
 </ul>`;
     parent.insertAdjacentHTML("beforeend", new_content);
 
     console.log("Содержимое меню аккаунта вставлено");
 }
 
+function linksToWordsAndTaskWhenLoggedIn() {
+    //TODO: настроить ссылки на навбаре
+}
+
+function linksToWordsAndTaskWhenNotLoggedIn() {
+    //TODO: настроить ссылки на навбаре
+}
+
+document.getElementById("main-page-logo").href = mainPageLink;
 if (isLoggedIn()) {
     dropdownWhenLoggedIn();
+    linksToWordsAndTaskWhenLoggedIn();
 } else {
     dropdownWhenNotLoggedIn();
+    linksToWordsAndTaskWhenNotLoggedIn();
 }

@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <title>BS</title>
 
-    <!-- Bootstrap include TODO: На деплое добавлять локально через url_for -->
-    <link href="../static/bootstrap/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="../static/bootstrap/bootstrap.bundle.min.js" defer></script>
+    <!-- Bootstrap include -->
+    <link href="{{ bs_css }}" rel="stylesheet">
+    <script src="{{ bs_js }}" defer></script>
     <!-- Bootstrap include -->
 
-    <script src="../static/script.js" defer></script> <!-- TODO: Заменить на url_for -->
+    <script src="{{ script_js }}" defer></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary pb-0 py-0">
     <div class="container">
-        <a class="navbar-brand" href="#">VataNasi</a> <!-- TODO: подставить норм ссылку. -->
+        <a class="navbar-brand" href="#" id="main-page-logo">VataNasi</a> <!-- TODO: подставить норм ссылку. -->
         <div class="navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
@@ -35,19 +34,7 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         Аккаунт
-                    </a>  <!-- TODO: подставить норм ссылку. -->
-                    <!--                    Будет добавляться через JS-->
-
-                    <!--                    <ul class="dropdown-menu">-->
-                    <!--                        <li><a class="dropdown-item" href="#">Действие</a></li>-->
-                    <!--                        <li><a class="dropdown-item" href="#">Другое действие</a></li>-->
-                    <!--                        <li>-->
-                    <!--                            <hr class="dropdown-divider">-->
-                    <!--                        </li>-->
-                    <!--                        <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>-->
-                    <!--                    </ul>-->
-
-                    <!--                    Будет добавляться через JS-->
+                    </a>
                 </li>
             </ul>
         </div>
