@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>BS</title>
@@ -14,29 +14,64 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">VataNasi</a>
-        <div class="navbar flex-grow-1" id="navbarSupportedContent">
-            <div class="nav-item">
-                <div class="navbar-text">Главная страница</div>
-            </div>
-        </div>
-        <div class="nav-item dropstart">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false">
-                Аккаунт
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Действие</a></li>
-                <li><a class="dropdown-item" href="#">Другое действие</a></li>
-                <li>
-                    <hr class="dropdown-divider">
+    <div class="container">
+        <a class="navbar-brand" href="">VataNasi</a>
+        <div class="navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link disabled">Главная страница</a>
                 </li>
-                <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
             </ul>
         </div>
+        <div class="navbar">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="">Мои слова</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="">Новое задание</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Аккаунт
+                    </a>
+                    <!--                    Будет добавляться через JS-->
 
+                    <!--                    <ul class="dropdown-menu">-->
+                    <!--                        <li><a class="dropdown-item" href="#">Действие</a></li>-->
+                    <!--                        <li><a class="dropdown-item" href="#">Другое действие</a></li>-->
+                    <!--                        <li>-->
+                    <!--                            <hr class="dropdown-divider">-->
+                    <!--                        </li>-->
+                    <!--                        <li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>-->
+                    <!--                    </ul>-->
+
+                    <!--                    Будет добавляться через JS-->
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
+<div class="container">
+    <h1>VataNasi<br><small class="text-body-secondary fs-4">Просто лучший сайт для изучения иностранных слов.</small>
+    </h1>
+    <br>
+    <p class="lead">Этот сайт нужен вам, если:</p>
+    <ul>
+        <li>у вас недостаточный словарный запас;</li>
+        <li>вы стремитесь к знаниям;</li>
+        <li>ваш учитель иностранного языка угрожает вас съесть &#128128;.</li>
+    </ul>
+    <br>
+    <p class="lead">Что нужно, чтобы начать использование</p>
+    <p>
+        <code>Войдите</code> в свой аккаунт или <code>зарегистрируйте новый</code>. Вы сможете <code>добавлять
+        слова</code> в
+        собственную базу слов, объединяя
+        их в категории. Затем во вкладке <code>Новое задание</code> выберите одну или несколько категорий и тренажеры по
+        ним.
+    </p>
+</div>
 </body>
 </html>
