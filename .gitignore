@@ -162,3 +162,6 @@ cython_debug/
 # Добавлено пользователем
 .vscode/
 experiments/
+
+# БД
+data.db
