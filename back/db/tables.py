@@ -13,7 +13,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     username = Column(String, unique=True)
     password_hash = Column(String)
-    categories = relationship("Category", back_populates="user_id")
+    categories = relationship("Category", back_populates="user")
 
     def __init__(self, username: str, password_hash: str) -> None:
         """
@@ -32,7 +32,9 @@ class Category(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     user_id = Column(Integer, ForeignKey(User.id))
-    words = relationship("Word", back_populates="category_id")
+    user = relationship("User", back_populates="categories")
+
+    words = relationship("Word", back_populates="category")
 
     def __init__(self, name: str, user_id: int) -> None:
         """
@@ -51,7 +53,8 @@ class Word(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     value = Column(String)
     translation = Column(String)
-    category_id = ForeignKey(Category.id)
+    category_id = Column(Integer, ForeignKey(Category.id))
+    category = relationship("Category", back_populates="words")
 
     def __init__(self, value: str, translation: str, category_id: int) -> None:
         """

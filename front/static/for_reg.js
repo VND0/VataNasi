@@ -1,5 +1,14 @@
-function isUsernameUnique(username) { //TODO: Написать норм обращение к БД
-    return true; // DEBUG purposes
+function isUsernameUnique(username) {
+    const promise = fetch(`http://127.0.0.1:8001/check_unique_uname/${username}`);
+    const result = promise
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+        });
+
+    return (!!parseInt(result));
 }
 
 const appendAlert = (message, type) => {

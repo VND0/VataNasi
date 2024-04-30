@@ -3,7 +3,7 @@ from typing import Iterable
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from tables import User, Category, Base
+from .tables import User, Category, Base
 
 
 class DataBase:
@@ -19,6 +19,14 @@ class DataBase:
 
     def create_tables_if_not_exist(self) -> None:
         Base.metadata.create_all(self.engine)
+
+    def check_unique_username(self, username: str) -> bool:
+        session = self.Session()
+        try:
+            all_users = session.query(User).filter(User.username == username)
+            return not all_users
+        finally:
+            session.close()
 
     def new_user(self, username: str, password_hash: str) -> int:
         """
