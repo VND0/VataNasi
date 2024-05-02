@@ -18,7 +18,7 @@ def passd_to_hash(password: str) -> str:
 @app.route("/check_unique_uname/<username>", methods=["GET"])
 def check_uname_handler(username: str):
     result = db.check_unique_username(username)
-    return str(int(not result))
+    return str(int(result))
 
 
 @app.route("/reg", methods=["POST"])
@@ -41,4 +41,4 @@ def registration_handler():
 
 if __name__ == '__main__':
     db.create_tables_if_not_exist()
-    app.run(debug=True, host="0.0.0.0", port=8001)
+    app.run(debug=False, host="0.0.0.0", port=8001)

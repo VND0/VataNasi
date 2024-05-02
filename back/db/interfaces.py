@@ -23,7 +23,7 @@ class DataBase:
     def check_unique_username(self, username: str) -> bool:
         session = self.Session()
         try:
-            all_users = session.query(User).filter(User.username == username)
+            all_users = list(session.query(User).filter(User.username == username).all())
             return not all_users
         finally:
             session.close()

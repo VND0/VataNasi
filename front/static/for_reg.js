@@ -1,8 +1,12 @@
 async function isUsernameUnique(username) {
-    const promise = await fetch(`http://127.0.0.1:8001/check_unique_uname/${username}`);
+    try {
+        const promise = await fetch(`http://127.0.0.1:8001/check_unique_uname/${username}`);
+    } catch {
+        return false;
+    }
     const result = await promise.text();
-
-    return (!!parseInt(result));
+    const returnValue = !!parseInt(result);
+    return returnValue;
 }
 
 const appendAlert = (message, type) => {
