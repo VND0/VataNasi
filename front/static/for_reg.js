@@ -1,12 +1,19 @@
-async function isUsernameUnique(username) {
-    try {
-        const promise = await fetch(`http://127.0.0.1:8001/check_unique_uname/${username}`);
-    } catch {
-        return false;
-    }
-    const result = await promise.text();
-    const returnValue = !!parseInt(result);
-    return returnValue;
+function isUsernameUnique(username) {
+    // let responseText = undefined;
+    // try {
+    //     const promise = fetch(`http://127.0.0.1:8001/check_unique_uname/${username}`).
+    //     then((prom) => {responseText = prom.text()});
+    // } catch {
+    //     return false;
+    // }
+    // while (responseText === undefined) {
+    // }
+    //
+    // return !!parseInt(responseText);
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `http://127.0.0.1:8001/check_unique_uname/${username}`, false);
+    xhr.send();
+    return !!parseInt(xhr.responseText); //TODO: обрабатывать статус код
 }
 
 const appendAlert = (message, type) => {
@@ -22,8 +29,18 @@ const appendAlert = (message, type) => {
     alertPlaceholder.append(wrapper)
 }
 
-function registerUser(newUsername, newPassword) { //TODO: сделать обращение к серверу.
-    alert(`${newUsername} with password ${newPassword} wasn't registered.`)
+function registerUser(newUsername, newPassword) {
+    // alert(`${newUsername} with password ${newPassword} wasn't registered.`)
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://127.0.0.1:8001/reg", false);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    const userData = {
+        username: newUsername,
+        password: newPassword,
+    }
+    xhr.send(JSON.stringify(userData));
+
+    alert(xhr.responseText); //TODO: сделать нормально
 }
 
 function submitRegistration() {
@@ -50,7 +67,7 @@ function submitRegistration() {
     }
 
     registerUser(username, password)
-    //TODO: Сделать редирект на главную
+    location.replace("/");
 }
 
 document.getElementById("submit_registration").onclick = submitRegistration;

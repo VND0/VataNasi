@@ -1,5 +1,4 @@
 import hashlib
-import json
 
 from flask import Flask, request
 from flask_cors import CORS
@@ -24,7 +23,7 @@ def check_uname_handler(username: str):
 @app.route("/reg", methods=["POST"])
 def registration_handler():
     # TODO: кибербезопасность стремится к нулю
-    args = json.loads(request.get_json())
+    args = request.get_json()
     username = args.get("username")
     password = args.get("password")
     if username is None or password is None:

@@ -37,7 +37,11 @@ function linksToWordsAndTaskWhenLoggedIn() {
 }
 
 function linksToWordsAndTaskWhenNotLoggedIn() {
-    //TODO: настроить ссылки на навбаре
+    const toMyWords = document.getElementById("my-words-link");
+    const toNewTask = document.getElementById("new-task-link");
+
+    toMyWords.href = "http://127.0.0.1:8000/login";
+    toNewTask.href = "http://127.0.0.1:8000/login";
 }
 
 document.getElementById("main-page-logo").href = mainPageLink;
