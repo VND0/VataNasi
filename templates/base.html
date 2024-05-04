@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BS</title>
+    <title>Регистрация</title>
 
     <!-- Bootstrap include -->
     <link href="{{ bs_css }}" rel="stylesheet">
@@ -18,7 +18,7 @@
         <div class="navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link disabled">Главная страница</a>
+                    <a class="nav-link disabled">Регистрация</a>
                 </li>
             </ul>
         </div>
@@ -40,25 +40,8 @@
         </div>
     </div>
 </nav>
-<div class="container">
-    <h1>VataNasi<br><small class="text-body-secondary fs-4">Сайт для изучения иностранных слов.</small>
-    </h1>
-    <br>
-    <p class="lead">Этот сайт нужен вам, если:</p>
-    <ul>
-        <li>у вас недостаточный словарный запас;</li>
-        <li>вы стремитесь к знаниям;</li>
-        <li>ваш учитель иностранного языка угрожает вас съесть &#128128;.</li>
-    </ul>
-    <br>
-    <p class="lead">Что нужно, чтобы начать использование</p>
-    <p>
-        <code>Войдите</code> в свой аккаунт или <code>зарегистрируйте новый</code>. Вы сможете <code>добавлять
-        слова</code> в
-        собственную базу слов, объединяя
-        их в категории. Затем во вкладке <code>Новое задание</code> выберите одну или несколько категорий и тренажеры по
-        ним.
-    </p>
-</div>
+
+{% block content %}
+{% endblock %}
 </body>
 </html>

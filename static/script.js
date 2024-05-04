@@ -6,7 +6,7 @@ function isLoggedIn() {
     return false; // TODO: Реализовать, когда будет вход
 }
 
-function dropdownWhenLoggedIn() { //TODO: Реализовать норм ссылки на кнопках.
+function dropdownWhenLoggedIn() {
     const parent = document.getElementById("account-dropdown-menu");
     const new_content = `<ul class="dropdown-menu">
 <li><a class="dropdown-item" href="#">Изменить данные</a></li>

@@ -20,7 +20,7 @@ class DataBase:
     def create_tables_if_not_exist(self) -> None:
         Base.metadata.create_all(self.engine)
 
-    def check_unique_username(self, username: str) -> bool:
+    def is_username_new(self, username: str) -> bool:
         session = self.Session()
         try:
             all_users = list(session.query(User).filter(User.username == username).all())
