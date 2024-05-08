@@ -1,9 +1,11 @@
 from flask import Flask, render_template, url_for, request
 import hashlib
 from db.interfaces import DataBase
+from flask_login import LoginManager, login_user, current_user, logout_user
 
 app = Flask(__name__)
 db = DataBase("data.db")
+login_manager = LoginManager(app)
 
 
 def passd_to_hash(password: str) -> str:
@@ -63,6 +65,12 @@ def handle_login_page():
     script_js = url_for('static', filename='script.js')
 
     for_auth_js = url_for("static", filename="for_auth.js")
+
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        password_hash = passd_to_hash(password)
+
     return render_template("auth_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js, for_auth_js=for_auth_js)
 
 

@@ -56,3 +56,10 @@ class DataBase:
             return categories
         finally:
             session.close()
+
+    def get_user(self, username: str, password: str) -> User | None:
+        session = self.Session()
+        try:
+            return session.query(User).filter(User.username == username and User.password == password).one_or_none()
+        finally:
+            session.close()

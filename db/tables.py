@@ -1,12 +1,13 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, relationship
+from flask_login import UserMixin
 
 
 class Base(DeclarativeBase):
     pass
 
 
-class User(Base):
+class User(Base, UserMixin):
     """Класс, реализующий данные пользователя в БД."""
     __tablename__ = "users"
 

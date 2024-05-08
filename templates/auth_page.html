@@ -3,17 +3,17 @@
 {% block content %}
 <div class="container">
     <div class="mx-5">
-        <form>
+        <form method="POST">
             <div class="mb-3">
                 <label for="username" class="form-label">Имя пользователя</label>
-                <input type="text" class="form-control" id="username" aria-describedby="username-hint">
+                <input type="text" class="form-control" id="username" name="username">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Пароль</label>
-                <input type="password" class="form-control" id="password" aria-describedby="password-hint">
+                <input type="password" class="form-control" id="password" name="password">
             </div>
             <div id="liveAlertPlaceholder"></div>
-            <button type="button" id="login_btn" class="btn btn-primary">Авторизоваться</button>
+            <button type="submit" id="login_btn" class="btn btn-primary">Авторизоваться</button>
         </form>
     </div>
 </div>

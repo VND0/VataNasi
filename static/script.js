@@ -50,5 +50,5 @@ if (isLoggedIn()) {
     linksToWordsAndTaskWhenLoggedIn();
 } else {
     dropdownWhenNotLoggedIn();
-    linksToWordsAndTaskWhenNotLoggedIn();
+    linksToWordsAndTaskWhenNotLoggedIn(); //TODO: перенести на flask
 }
