@@ -36,19 +36,19 @@
                         Аккаунт
                     </a>
                     {% if is_authenticated %} <!-- TODO: Изменить render_template-ы, чтобы это начало работать. -->
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Изменить данные</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="/logout">Выйти</a></li>
-                            <li><a class="dropdown-item" href="#">Удалить аккаунт</a></li>
-                        </ul>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Изменить данные</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+                        <li><a class="dropdown-item" href="#">Удалить аккаунт</a></li>
+                    </ul>
                     {% else %}
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/login">Войти</a></li>
-                            <li><a class="dropdown-item" href="/register">Зарегистрироваться</a></li>
-                        </ul>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/login">Войти</a></li>
+                        <li><a class="dropdown-item" href="/register">Зарегистрироваться</a></li>
+                    </ul>
                     {% endif %}
                 </li>
             </ul>
