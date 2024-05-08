@@ -165,3 +165,6 @@ experiments/
 
 # БД
 data.db
+
+# Секретный ключ
+secret_key.txt

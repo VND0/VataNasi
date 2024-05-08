@@ -1,31 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="mx-5">
-        <form method="POST">
-            <div class="mb-3">
-                <label for="username" class="form-label">Имя пользователя</label>
-                <input type="text" class="form-control" id="username" aria-describedby="username-hint" name="username">
-                <div id="username-hint" class="form-text">Уникальное букво-циферное имя пользователя.</div>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Пароль</label>
-                <input type="password" class="form-control" id="password" aria-describedby="password-hint"
-                       name="password">
-                <div id="password-hint" class="form-text">Пароль может содержать любые символы.</div>
-            </div>
-            <div class="mb-3">
-                <label for="password_confirm" class="form-label">Подтвердите пароль</label>
-                <input type="password" class="form-control" id="password_confirm" name="password_confirm">
-            </div>
-            <div id="liveAlertPlaceholder">
-                {% if add_message %}
-                {% include "alert.html" %}
-                {% endif %}
-            </div>
-            <button type="submit" id="submit_registration" class="btn btn-primary">Зарегистрироваться</button>
-        </form>
+    <div class="container">
+        <div class="mx-5">
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Имя пользователя</label>
+                    <input type="text" class="form-control" id="username" aria-describedby="username-hint"
+                           name="username">
+                    <div id="username-hint" class="form-text">Уникальное букво-циферное имя пользователя.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Пароль</label>
+                    <input type="password" class="form-control" id="password" aria-describedby="password-hint"
+                           name="password">
+                    <div id="password-hint" class="form-text">Пароль может содержать любые символы.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="password_confirm" class="form-label">Подтвердите пароль</label>
+                    <input type="password" class="form-control" id="password_confirm" name="password_confirm">
+                </div>
+                <div id="liveAlertPlaceholder">
+                    {% if add_message %}
+                        {% include "alert.html" %}
+                    {% endif %}
+                </div>
+                <button type="submit" id="submit_registration" class="btn btn-primary">Зарегистрироваться</button>
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}
