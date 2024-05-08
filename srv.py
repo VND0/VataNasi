@@ -77,8 +77,6 @@ def handle_login_page():
     bs_js = url_for('static', filename='bootstrap/bootstrap.bundle.min.js')
     script_js = url_for('static', filename='script.js')
 
-    for_auth_js = url_for("static", filename="for_auth.js")
-
     if request.method == "POST":
         username = request.form.get("username").strip()
         password = request.form.get("password").strip()
@@ -86,27 +84,25 @@ def handle_login_page():
 
         if not username:
             return render_template("auth_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js, add_message=True,
-                                   for_auth_js=for_auth_js, type="warning", message="Поле логина пустое")
+                                   type="warning", message="Поле логина пустое")
         if not password:
             return render_template("auth_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js, add_message=True,
-                                   for_auth_js=for_auth_js, type="warning", message="Поле пароля пустое")
+                                   type="warning", message="Поле пароля пустое")
 
         user = db.get_user(username, password_hash)
         if user is None:
             return render_template("auth_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js, add_message=True,
-                                   for_auth_js=for_auth_js, type="warning",
-                                   message="Неверные имя пользователя или пароль.")
+                                   type="warning", message="Неверные имя пользователя или пароль.")
         login_user(user)
 
-    return render_template("auth_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js, for_auth_js=for_auth_js,
-                           add_message=False)
+    return render_template("auth_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js, add_message=False)
 
 
-@app.route("/check")
-def check_login():
-    if current_user.is_authenticated:
-        return "Logged in"
-    return "Logged out"
+# @app.route("/check")
+# def check_login():
+#     if current_user.is_authenticated:
+#         return "Logged in"
+#     return "Logged out"
 
 
 @login_required
@@ -114,6 +110,22 @@ def check_login():
 def logout():
     logout_user()
     return redirect("/")
+
+
+@app.route("/my_words")
+def my_words_page():
+    if not current_user.is_authenticated:
+        return redirect("/login")
+
+    raise NotImplementedError
+
+
+@app.route("/new_task")
+def new_task_page():
+    if not current_user.is_authenticated:
+        return redirect("/login")
+
+    raise NotImplementedError
 
 
 if __name__ == '__main__':

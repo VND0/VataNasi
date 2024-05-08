@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Регистрация</title>
+    <title>VataNasi</title>
 
     <!-- Bootstrap include -->
     <link href="{{ bs_css }}" rel="stylesheet">
@@ -14,27 +14,42 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary pb-0 py-0">
     <div class="container">
-        <a class="navbar-brand" href="#" id="main-page-logo">VataNasi</a>
+        <a class="navbar-brand" href="/" id="main-page-logo">VataNasi</a>
         <div class="navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link disabled">Регистрация</a>
+                    <a class="nav-link disabled" id="navbar-heading">< Nothing was inserted there ></a>
                 </li>
             </ul>
         </div>
         <div class="navbar">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#" id="my-words-link">Мои слова</a>
+                    <a class="nav-link active" href="/my_words" id="my-words-link">Мои слова</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#" id="new-task-link">Новое задание</a>
+                    <a class="nav-link active" href="/new_task" id="new-task-link">Новое задание</a>
                 </li>
                 <li class="nav-item dropdown" id="account-dropdown-menu">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         Аккаунт
                     </a>
+                    {% if is_authenticated %} <!-- TODO: Изменить render_template-ы, чтобы это начало работать. -->
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Изменить данные</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+                            <li><a class="dropdown-item" href="#">Удалить аккаунт</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/login">Войти</a></li>
+                            <li><a class="dropdown-item" href="/register">Зарегистрироваться</a></li>
+                        </ul>
+                    {% endif %}
                 </li>
             </ul>
         </div>
