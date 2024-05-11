@@ -4,6 +4,7 @@ function onPageLoad() {
     const authPage = "Авторизация";
     const myWordsPage = "Список слов";
     const newTaskPage = "Новое задание";
+    const changeAccountDataPage = "Управление аккаунтом";
 
     const partsOfURL = document.URL.split("/");
     const route = partsOfURL[partsOfURL.length - 1];
@@ -23,6 +24,12 @@ function onPageLoad() {
             break;
         case "new_task":
             document.getElementById("navbar-heading").innerText = newTaskPage;
+            break;
+        case "change_account_data":
+            document.getElementById("navbar-heading").innerText = changeAccountDataPage;
+            break;
+        default:
+            alert("Not implemented!");
             break;
     }
 }

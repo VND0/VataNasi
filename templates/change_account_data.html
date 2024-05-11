@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block additional_include %}
+<script src="{{ url_for('static', filename='for_change_data.js') }}" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <form method="POST">
+        <h3 class="me-3">Изменение данных</h3>
+        <div class="mb-3">
+            <label for="username" class="form-label">Имя пользователя</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="{{ current_username }}"
+                   disabled>
+        </div>
+        <div class="mb-3">
+            <label for="old-password" class="form-label">Старый пароль</label>
+            <input type="password" class="form-control" id="old-password" name="old-password">
+        </div>
+        <div class="mb-3">
+            <label for="new-password" class="form-label">Новый пароль</label>
+            <input type="password" class="form-control" id="new-password" name="new-password">
+        </div>
+        <button type="submit" id="login_btn" class="btn btn-primary">Изменить данные</button>
+    </form>
+</div>
+
+<div class="container mt-5" id="liveAlertPlaceholder">
+    {% if add_message %}
+    {% include "alert.html" %}
+    {% endif %}
+</div>
+
+<div class="container mt-5">
+    <form method="post">
+        <h3 class="me-3">Удаление аккаунта</h3>
+        <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <button type="submit" class="btn btn-danger" id="del_account"> Удалить аккаунт &#128549;</button>
+    </form>
+</div>
+{% endblock %}

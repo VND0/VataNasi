@@ -21,21 +21,13 @@ def load_user(user_id: int):
 
 @app.route("/")
 def handle_main_page():
-    bs_css = url_for('static', filename='bootstrap/bootstrap.min.css')
-    bs_js = url_for('static', filename='bootstrap/bootstrap.bundle.min.js')
-    script_js = url_for('static', filename='script.js')
-    return render_template("index.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js,
-                           is_authenticated=current_user.is_authenticated)
+    return render_template("index.html", is_authenticated=current_user.is_authenticated)
 
 
 @app.route("/register", methods=["POST", "GET"])
 def handle_register_page():
     if current_user.is_authenticated:
         return redirect("/")
-
-    bs_css = url_for('static', filename='bootstrap/bootstrap.min.css')
-    bs_js = url_for('static', filename='bootstrap/bootstrap.bundle.min.js')
-    script_js = url_for('static', filename='script.js')
 
     if request.method == "POST":
         username = request.form.get("username")
@@ -45,33 +37,29 @@ def handle_register_page():
 
         if not username.isalnum():
             message = "Имя пользователя содержит недопустимые символы."
-            return render_template("reg_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js,
-                                   add_message=True, type="warning", message=message,
+            return render_template("reg_page.html", add_message=True, type="warning", message=message,
                                    is_authenticated=current_user.is_authenticated)
         elif password != password_confirm:
             message = "Пароли не совпадают"
-            return render_template("reg_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js,
-                                   add_message=True, type="warning", message=message,
+            return render_template("reg_page.html", add_message=True, type="warning", message=message,
                                    is_authenticated=current_user.is_authenticated)
         elif not db.is_username_new(username):
             message = "Имя пользователя занято."
-            return render_template("reg_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js,
-                                   add_message=True, type="warning", message=message,
+            return render_template("reg_page.html", add_message=True, type="warning", message=message,
                                    is_authenticated=current_user.is_authenticated)
         try:
             db.new_user(username, password_hash)
         except Exception as e:
             print(e)
             message = "Внутренняя ошибка сервера."
-            return render_template("reg_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js,
-                                   add_message=True, type="danger", message=message,
+            return render_template("reg_page.html", add_message=True, type="danger", message=message,
                                    is_authenticated=current_user.is_authenticated)
 
         added_user = db.get_user(username, password_hash)  # Здесь пользователь гарантированно существует.
         login_user(added_user)  # TODO: оптимизировать двойной запрос
         return redirect("/")
 
-    return render_template("reg_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js, add_message=False,
+    return render_template("reg_page.html", add_message=False,
                            is_authenticated=current_user.is_authenticated)
 
 
@@ -80,33 +68,27 @@ def handle_login_page():
     if current_user.is_authenticated:
         return redirect("/")
 
-    bs_css = url_for('static', filename='bootstrap/bootstrap.min.css')
-    bs_js = url_for('static', filename='bootstrap/bootstrap.bundle.min.js')
-    script_js = url_for('static', filename='script.js')
-
     if request.method == "POST":
         username = request.form.get("username").strip()
         password = request.form.get("password").strip()
         password_hash = passd_to_hash(password)
 
         if not username:
-            return render_template("auth_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js, add_message=True,
-                                   type="warning", message="Поле логина пустое",
-                                   is_authenticated=current_user.is_authenticated)
+            return render_template("auth_page.html", add_message=True, type="warning",
+                                   message="Поле логина пустое", is_authenticated=current_user.is_authenticated)
         if not password:
-            return render_template("auth_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js, add_message=True,
-                                   type="warning", message="Поле пароля пустое",
-                                   is_authenticated=current_user.is_authenticated)
+            return render_template("auth_page.html", add_message=True, type="warning",
+                                   message="Поле пароля пустое", is_authenticated=current_user.is_authenticated)
 
         user = db.get_user(username, password_hash)
         if user is None:
-            return render_template("auth_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js, add_message=True,
-                                   type="warning", message="Неверные имя пользователя или пароль.",
+            return render_template("auth_page.html", add_message=True, type="warning",
+                                   message="Неверные имя пользователя или пароль.",
                                    is_authenticated=current_user.is_authenticated)
         login_user(user)
         return redirect("/")
 
-    return render_template("auth_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js, add_message=False,
+    return render_template("auth_page.html", add_message=False,
                            is_authenticated=current_user.is_authenticated)
 
 
@@ -131,6 +113,18 @@ def new_task_page():
         return redirect("/login")
 
     raise NotImplementedError
+
+
+@login_required
+@app.route("/change_account_data")
+def change_account_data_page():
+    if not current_user.is_authenticated:
+        return redirect("/")
+
+    if request.method == "POST":
+        pass
+
+    return render_template("change_account_data.html", add_message=False)
 
 
 if __name__ == '__main__':
