@@ -69,11 +69,7 @@ def handle_register_page():
 
         added_user = db.get_user(username, password_hash)  # Здесь пользователь гарантированно существует.
         login_user(added_user)  # TODO: оптимизировать двойной запрос
-
-        message = f"Пользователь {username} успешно добавлен и авторизован."
-        return render_template("reg_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js,
-                               add_message=True, type="success", message=message,
-                               is_authenticated=current_user.is_authenticated)
+        return redirect("/")
 
     return render_template("reg_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js, add_message=False,
                            is_authenticated=current_user.is_authenticated)
@@ -108,8 +104,7 @@ def handle_login_page():
                                    type="warning", message="Неверные имя пользователя или пароль.",
                                    is_authenticated=current_user.is_authenticated)
         login_user(user)
-        return render_template("index.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js,
-                               is_authenticated=current_user.is_authenticated)
+        return redirect("/")
 
     return render_template("auth_page.html", bs_css=bs_css, bs_js=bs_js, script_js=script_js, add_message=False,
                            is_authenticated=current_user.is_authenticated)
