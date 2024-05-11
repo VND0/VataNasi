@@ -3,7 +3,7 @@ from typing import Iterable
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from .tables import User, Category, Base
+from .tables import User, Category, Base, Word
 
 
 class DataBase:
@@ -71,3 +71,21 @@ class DataBase:
             return session.query(User).filter(User.id == id).one()
         finally:
             session.close()
+
+    def delete_user(self, username: str) -> None:
+        with self.Session() as session:
+            user = session.query(User).filter(User.username == username).one()
+            categories = session.query(Category).filter(Category.user == user).all()
+            for category in categories:
+                words = session.query(Word).filter(Word.category == category).all()
+                for word in words:
+                    session.delete(word)
+                session.delete(category)
+            session.delete(user)
+
+            session.commit()
+
+    def change_passwd(self, username: str, new_passwd_hash: str) -> None:
+        with self.Session() as session:
+            session.query(User).filter(User.username == username).update({User.password_hash: new_passwd_hash})
+            session.commit()

@@ -84,12 +84,39 @@ def logout():
 
 
 @login_required
-@bp.route("/change_account_data")
+@bp.route("/change_account_data", methods=["POST", "GET"])
 def change_account_data_page():
     if not current_user.is_authenticated:
         return redirect("/")
 
+    additional_kwargs = {"add_message": False}
     if request.method == "POST":
-        pass
+        additional_kwargs["add_message"] = True
+        # На странице две формы. Код ниже определяет, какая именно была отправлена.
+        if request.form.get("old-password") is None:
+            password = request.form.get("password")
+            if passd_to_hash(password) == current_user.password_hash:
+                remembered = current_user.username
+                logout_user()
+                db.delete_user(remembered)
+                return redirect("/")
+            else:
+                additional_kwargs["type"] = "warning"
+                additional_kwargs["message"] = "Неправильный пароль"
+        else:
+            old = request.form.get("old-password")
+            new = request.form.get("new-password")
 
-    return render_template("change_account_data.html", add_message=False)
+            if current_user.password_hash != passd_to_hash(old):
+                additional_kwargs["type"] = "warning"
+                additional_kwargs["message"] = "Неправильный старый пароль"
+            elif not new:
+                additional_kwargs["type"] = "warning"
+                additional_kwargs["message"] = "Пустой новый пароль"
+            else:
+                new_password_hash = passd_to_hash(new)
+                db.change_passwd(current_user.username, new_password_hash)
+                additional_kwargs["type"] = "success"
+                additional_kwargs["message"] = "Пароль успешно обновлен"
+
+    return render_template("edit_account.html", current_username=current_user.username, **additional_kwargs)
