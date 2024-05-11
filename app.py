@@ -1,10 +1,8 @@
 from flask import Flask, render_template
 from flask_login import LoginManager, current_user
 
-import auth_bp
-import change_account_data_bp
+import account_bp
 import my_words_bp
-import registration_bp
 import tasks_bp
 from db.interfaces import DataBase
 
@@ -28,9 +26,7 @@ if __name__ == '__main__':
         key = f.read()
         app.config["SECRET_KEY"] = key
 
-    app.register_blueprint(registration_bp.bp)
-    app.register_blueprint(auth_bp.bp)
-    app.register_blueprint(change_account_data_bp.bp)
+    app.register_blueprint(account_bp.bp)
     app.register_blueprint(my_words_bp.bp)
     app.register_blueprint(tasks_bp.bp)
 
