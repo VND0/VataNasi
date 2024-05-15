@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block additional_include %}
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='for_categories.js') }}" defer></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="d-flex justify-content-between mt-2">
+            <h1>Ваши категории слов</h1>
+            {% include "categories_tools_buttons.html" %}
+        </div>
+        <div class="mx-3 mt-3">
+            {% if not categories %}
+                <div class="alert alert-secondary" role="alert">
+                    Нет категорий. Добавьте новую.
+                </div>
+            {% endif %}
+            <table class="table table-borderless" id="categories-table">
+                {% for category in categories %}
+                    <tr class="my-2">
+                        <td class="table-secondary category-in-td">{{ category }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

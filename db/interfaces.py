@@ -1,5 +1,3 @@
-from typing import Iterable
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -88,4 +86,12 @@ class DataBase:
     def change_passwd(self, username: str, new_passwd_hash: str) -> None:
         with self.Session() as session:
             session.query(User).filter(User.username == username).update({User.password_hash: new_passwd_hash})
+            session.commit()
+
+    def delete_category(self, user_id: int, category_name: str) -> None:
+        with self.Session() as session:
+            category = session.query(Category).filter(
+                Category.user_id == user_id and Category.name == category_name
+            ).one()
+            session.delete(category)
             session.commit()

@@ -1,5 +1,6 @@
 from flask import redirect, Blueprint, render_template
 from flask_login import current_user
+
 from db.interfaces import DataBase
 
 bp = Blueprint("my_words", __name__)
@@ -13,3 +14,4 @@ def my_words_page():
 
     return render_template("words_list_page.html",
                            categories=db.get_categories_of_user(current_user.id))
+    # categories=[])
