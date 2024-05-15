@@ -44,7 +44,7 @@ class DataBase:
         finally:
             session.close()
 
-    def get_categories_of_user(self, user_id: int) -> Iterable[Category]:
+    def get_categories_of_user(self, user_id: int) -> list[str]:
         """
         Получение категорий слов, относящихся к конкретному пользователю.
         :param user_id: id пользователя, к которому относятся категории
@@ -52,8 +52,8 @@ class DataBase:
         """
         session = self.Session()
         try:
-            categories = session.query(Category).filter(Category.user_id == user_id)
-            return categories
+            categories = session.query(Category).filter(Category.user_id == user_id).all()
+            return [x.name for x in categories]
         finally:
             session.close()
 
