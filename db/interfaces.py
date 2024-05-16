@@ -89,9 +89,8 @@ class DataBase:
             session.commit()
 
     def delete_category(self, user_id: int, category_name: str) -> None:
-        with self.Session() as session:
-            category = session.query(Category).filter(
-                Category.user_id == user_id and Category.name == category_name
-            ).one()
+        with (self.Session() as session):
+            category = session.query(Category).filter(Category.user_id == user_id).filter(
+                Category.name == category_name).one()
             session.delete(category)
             session.commit()
