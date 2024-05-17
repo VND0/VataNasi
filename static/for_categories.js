@@ -36,4 +36,14 @@ document.querySelector("#delete").addEventListener("click", (event) => {
             location.reload(); //TODO: пофиксить то, что надо отдельно перезагружать страницу
         }
     }
-})
+});
+
+// document.querySelector("#new").addEventListener("click", (event) => {
+//     const tableOfCategories = document.querySelector("#categories-table");
+//
+// });
+const newBtn = document.querySelector("#new")
+const newAttributes = {"data-bs-toggle": "modal", "data-bs-target": "#newModal"}
+for (const attr in newAttributes) {
+    newBtn.setAttribute(attr, newAttributes[attr]);
+}

@@ -20,6 +20,6 @@ def my_words_page():
     if not current_user.is_authenticated:
         return redirect("/login")
 
-    return render_template("words_list_page.html", is_authenticated=current_user.is_authenticated,
+    return render_template("categories_list_page.html", is_authenticated=current_user.is_authenticated,
                            categories=db.get_categories_of_user(current_user.id))
     # categories=[])

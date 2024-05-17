@@ -17,6 +17,11 @@
                     Нет категорий. Добавьте новую.
                 </div>
             {% endif %}
+            {% if add_message %}
+                <div class="alert alert-warning" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
             <table class="table table-borderless" id="categories-table">
                 {% for category in categories %}
                     <tr class="my-2">
@@ -24,6 +29,7 @@
                     </tr>
                 {% endfor %}
             </table>
+            {% include "new_modal.html" %}
         </div>
     </div>
 {% endblock %}
