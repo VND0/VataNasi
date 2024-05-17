@@ -92,5 +92,20 @@ class DataBase:
         with (self.Session() as session):
             category = session.query(Category).filter(Category.user_id == user_id).filter(
                 Category.name == category_name).one()
+            words = session.query(Word).filter(Word.category == category).all()
+            for word in words:
+                session.delete(word)
             session.delete(category)
             session.commit()
+
+    def new_category(self, user_id: int, category_name: str) -> str:
+        with self.Session() as session:
+            already_existing = session.query(Category).filter(Category.user_id == user_id).filter(
+                Category.name == category_name).one_or_none()
+            if not (already_existing is None):
+                return "Такая категория уже существует"
+
+            new_category = Category(category_name, user_id)
+            session.add(new_category)
+            session.commit()
+            return ""
