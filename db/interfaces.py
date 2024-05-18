@@ -58,8 +58,8 @@ class DataBase:
     def get_user(self, username: str, password_hash: str) -> User | None:
         session = self.Session()
         try:
-            return session.query(User).filter(
-                User.username == username and User.password_hash == password_hash).one_or_none()
+            return session.query(User).filter(User.username == username).filter(
+                User.password_hash == password_hash).one_or_none()
         finally:
             session.close()
 
