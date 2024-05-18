@@ -6,7 +6,12 @@ function oneClick(event) {
 }
 
 function doubleClick(event) {
-
+    const categories = document.querySelectorAll(".category-in-td");
+    for (const c of categories) {
+        if (c.classList.contains("active-td")) {
+            location.href = `/my_words/${c.innerText}`;
+        }
+    }
 }
 
 const categories = document.querySelectorAll(".category-in-td");

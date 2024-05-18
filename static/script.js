@@ -2,6 +2,7 @@ function onPageLoad() {
     const mainPage = "Главная страница";
     const registrationPage = "Регистрация";
     const authPage = "Авторизация";
+    const myCategoriesPage = "Список категорий";
     const myWordsPage = "Список слов";
     const newTaskPage = "Новое задание";
     const changeAccountDataPage = "Управление аккаунтом";
@@ -15,12 +16,14 @@ function onPageLoad() {
         document.getElementById("navbar-heading").innerText = registrationPage;
     } else if (route === "login") {
         document.getElementById("navbar-heading").innerText = authPage;
-    } else if (route === "my_words") {
-        document.getElementById("navbar-heading").innerText = myWordsPage;
+    } else if (route === "my_categories") {
+        document.getElementById("navbar-heading").innerText = myCategoriesPage;
     } else if (route === "new_task") {
         document.getElementById("navbar-heading").innerText = newTaskPage;
     } else if (route === "change_account_data") {
         document.getElementById("navbar-heading").innerText = changeAccountDataPage;
+    } else if (partsOfURL[partsOfURL.length - 2] === "my_words") {
+        document.getElementById("navbar-heading").innerText = myWordsPage;
     } else {
         alert("Not implemented!");
     }
