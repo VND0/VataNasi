@@ -34,6 +34,9 @@ def my_words_page():
         else:
             raise NotImplementedError
 
+        if not kwargs["message"]:
+            return redirect("/my_words")
+
     return render_template("categories_list_page.html", is_authenticated=current_user.is_authenticated, **kwargs,
                            categories=db.get_categories_of_user(current_user.id))
     # TODO: пофиксить вообще все

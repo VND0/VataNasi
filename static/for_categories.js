@@ -16,7 +16,7 @@ categories.forEach((elem) => {
     elem.addEventListener("dblclick", doubleClick)
 })
 
-function delCategoryRequest(catName) {
+function delCategoryRequest(catName, deleted) {
     const promise = fetch("/del-category", {
         method: "POST",
         body: JSON.stringify({"category_name": catName}),
@@ -25,15 +25,16 @@ function delCategoryRequest(catName) {
         },
     }).then((response) => {
         console.log(response.text());
-    })
-}
+    }).then((response) => {
+    deleted.parentNode.remove();
+})}
 
 document.querySelector("#delete").addEventListener("click", (event) => {
     const categories = document.querySelectorAll(".category-in-td");
     for (const c of categories) {
         if (c.classList.contains("active-td")) {
-            delCategoryRequest(c.innerText);
-            location.reload(); //TODO: пофиксить то, что надо отдельно перезагружать страницу
+            delCategoryRequest(c.innerText, c);
+            location.reload();
         }
     }
 });

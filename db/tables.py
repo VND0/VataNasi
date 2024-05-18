@@ -34,7 +34,6 @@ class Category(Base):
     name = Column(String)
     user_id = Column(Integer, ForeignKey(User.id))
     user = relationship("User", back_populates="categories")
-
     words = relationship("Word", back_populates="category")
 
     def __init__(self, name: str, user_id: int) -> None:
