@@ -2,19 +2,19 @@
 
 {% block additional_include %}
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
-    <script src="{{ url_for('static', filename='for_categories.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='for_words.js') }}" defer></script>
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="d-flex justify-content-between mt-2">
-            <h1>Ваши категории слов</h1>
+            <h1>Слова в категории {{ current_category }}</h1>
             {% include "tools_buttons.html" %}
         </div>
         <div class="mx-3 mt-3">
-            {% if not categories %}
+            {% if not words %}
                 <div class="alert alert-secondary" role="alert">
-                    Нет категорий. Добавьте новую.
+                    Нет добавленных слов. Добавьте.
                 </div>
             {% endif %}
             {% if message %}
@@ -23,13 +23,13 @@
                 </div>
             {% endif %}
             <table class="table table-borderless" id="categories-table">
-                {% for category in categories %}
+                {% for word in words %}
                     <tr class="my-2">
-                        <td class="table-secondary element-in-td">{{ category }}</td>
+                        <td class="table-secondary element-in-td">{{ word }}</td>
                     </tr>
                 {% endfor %}
             </table>
-            {% include "new_modal.html" %}
+{#            {% include "new_modal.html" %}#}
         </div>
     </div>
 {% endblock %}

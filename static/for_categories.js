@@ -6,7 +6,7 @@ function oneClick(event) {
 }
 
 function doubleClick(event) {
-    const categories = document.querySelectorAll(".category-in-td");
+    const categories = document.querySelectorAll(".element-in-td");
     for (const c of categories) {
         if (c.classList.contains("active-td")) {
             location.href = `/my_words/${c.innerText}`;
@@ -14,7 +14,7 @@ function doubleClick(event) {
     }
 }
 
-const categories = document.querySelectorAll(".category-in-td");
+const categories = document.querySelectorAll(".element-in-td");
 
 categories.forEach((elem) => {
     elem.addEventListener("click", oneClick)
@@ -38,7 +38,7 @@ function delCategoryRequest(catName, deleted) {
 }
 
 document.querySelector("#delete").addEventListener("click", (event) => {
-    const categories = document.querySelectorAll(".category-in-td");
+    const categories = document.querySelectorAll(".element-in-td");
     for (const c of categories) {
         if (c.classList.contains("active-td")) {
             delCategoryRequest(c.innerText, c);

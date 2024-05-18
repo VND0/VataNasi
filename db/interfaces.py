@@ -109,3 +109,14 @@ class DataBase:
             session.add(new_category)
             session.commit()
             return ""
+
+    def get_words_of_category(self, category: str, user_id: int) -> list[str]:
+        with self.Session() as session:
+            category_obj = session.query(Category).filter(Category.user_id == user_id).filter(
+                Category.name == category).one_or_none()
+            if category_obj is None:
+                raise ValueError("Категории не существует.")
+
+            words_objs: list[Word] = session.query(Word).filter(Word.category == category_obj).all()
+            words_reprs = [f"{x.value} - {x.translation}" for x in words_objs]
+            return words_reprs
