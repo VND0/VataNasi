@@ -36,19 +36,19 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                         Аккаунт
                     </a>
-                    {% if is_authenticated %} <!-- TODO: Изменить render_template-ы, чтобы это начало работать. -->
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/change_account_data">Изменить данные</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="/logout">Выйти</a></li>
-                    </ul>
+                    {% if is_authenticated %}
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/change_account_data">Изменить данные</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+                        </ul>
                     {% else %}
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/login">Войти</a></li>
-                        <li><a class="dropdown-item" href="/register">Зарегистрироваться</a></li>
-                    </ul>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/login">Войти</a></li>
+                            <li><a class="dropdown-item" href="/register">Зарегистрироваться</a></li>
+                        </ul>
                     {% endif %}
                 </li>
             </ul>

@@ -26,23 +26,21 @@ function delCategoryRequest(catName, deleted) {
     }).then((response) => {
         console.log(response.text());
     }).then((response) => {
-    deleted.parentNode.remove();
-})}
+        deleted.parentNode.remove();
+        location.reload();
+
+    })
+}
 
 document.querySelector("#delete").addEventListener("click", (event) => {
     const categories = document.querySelectorAll(".category-in-td");
     for (const c of categories) {
         if (c.classList.contains("active-td")) {
             delCategoryRequest(c.innerText, c);
-            location.reload();
         }
     }
 });
 
-// document.querySelector("#new").addEventListener("click", (event) => {
-//     const tableOfCategories = document.querySelector("#categories-table");
-//
-// });
 const newBtn = document.querySelector("#new")
 const newAttributes = {"data-bs-toggle": "modal", "data-bs-target": "#newModal"}
 for (const attr in newAttributes) {

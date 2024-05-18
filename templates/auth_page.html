@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-    <div class="mx-5">
-        <form method="POST">
-            <div class="mb-3">
-                <label for="username" class="form-label">Имя пользователя</label>
-                <input type="text" class="form-control" id="username" name="username">
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Пароль</label>
-                <input type="password" class="form-control" id="password" name="password">
-            </div>
-            <div id="liveAlertPlaceholder">
-                {% if add_message %}
-                {% include "alert.html" %}
-                {% endif %}
-            </div>
-            <button type="submit" id="login_btn" class="btn btn-primary">Авторизоваться</button>
-        </form>
+    <div class="container">
+        <div class="mx-5">
+            <form method="POST">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Имя пользователя</label>
+                    <input type="text" class="form-control" id="username" name="username">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Пароль</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div id="liveAlertPlaceholder">
+                    {% if add_message %}
+                        {% include "alert.html" %}
+                    {% endif %}
+                </div>
+                <button type="submit" id="login_btn" class="btn btn-primary">Авторизоваться</button>
+            </form>
+        </div>
     </div>
-</div>
 {% endblock %}
