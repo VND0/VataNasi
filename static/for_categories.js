@@ -15,7 +15,6 @@ function doubleClick(event) {
 }
 
 const categories = document.querySelectorAll(".element-in-td");
-
 categories.forEach((elem) => {
     elem.addEventListener("click", oneClick)
     elem.addEventListener("dblclick", doubleClick)

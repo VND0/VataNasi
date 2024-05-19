@@ -15,7 +15,16 @@ def del_category():
     return ""
 
 
-def handle_add_newcategory_form() -> dict:
+@bp.route("/del-word", methods=["POST"])
+def del_word():
+    data = request.get_json()
+    category_name = data["category"]
+    word = data["word"]
+    db.del_word(current_user.id, category_name, word)
+    return ""
+
+
+def handle_add_new_category_form() -> dict:
     new_name = request.form.get("new-category-name")
     if not new_name:
         return {"message": "Имя категории не может быть пустым."}
@@ -32,7 +41,7 @@ def my_categories_page():
     kwargs = {}
     if request.method == "POST":
         if not (request.form.get("new-category-name") is None):
-            kwargs = handle_add_newcategory_form()
+            kwargs = handle_add_new_category_form()
         else:
             raise NotImplementedError
 
@@ -65,6 +74,6 @@ def my_words_page(category: str):
         kwargs["words"] = words_reprs
     except ValueError as e:
         kwargs["message"] = str(e)
-        # return render_template("words_list_page.html", is_authenticated=current_user.is_authenticated, **kwargs)
 
-    return render_template("words_list_page.html", is_authenticated=current_user.is_authenticated, **kwargs)
+    return render_template("words_list_page.html", is_authenticated=current_user.is_authenticated, **kwargs,
+                           current_category=category)

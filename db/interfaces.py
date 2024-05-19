@@ -134,3 +134,11 @@ class DataBase:
             word_obj = Word(value, translation, category_obj.id)
             session.add(word_obj)
             session.commit()
+
+    def del_word(self, user_id: int, category_name: int, word: str):
+        with self.Session() as session:
+            category_obj = session.query(Category).filter(Category.user_id == user_id).filter(
+                Category.name == category_name).one()
+            word_obj = session.query(Word).filter(Word.category == category_obj).filter(Word.value == word).one()
+            session.delete(word_obj)
+            session.commit()
