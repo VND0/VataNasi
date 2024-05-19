@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block additional_include %}
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container d-flex justify-content-evenly mt-5">
+        <div class="card align-middle" style="width: 18rem">
+            <img src="{{ url_for('static', filename='images/matching_mode.png') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Сопоставление</h5>
+                <p class="card-text">Ваша задача - соотнести слова с их правильными переводами.</p>
+                <a href="#" class="btn btn-primary mt-3">Выбрать</a>
+            </div>
+        </div>
+        <div class="card align-middle in-development" style="width: 18rem;">
+            <img src="{{ url_for('static', filename='images/typing_mode.png') }}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Печать перевода</h5>
+                <p class="card-text">Ваша задача - ввести перевод данного слова.</p>
+                <a href="#" class="btn btn-primary mt-3">Выбрать</a>
+            </div>
+        </div>
+        <div class="card align-middle in-development" style="width: 18rem;">
+            <img src="{{ url_for('static', filename='images/choice_mode.png') }}" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">Оценка перевода</h5>
+                <p class="card-text">Компьютер предлагает перевод слова. Ваша задача - сказать, правильный он или
+                    нет.</p>
+                <a href="#" class="btn btn-primary mt-3">Выбрать</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

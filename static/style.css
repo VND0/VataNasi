@@ -5,13 +5,30 @@
     border-radius: 3px !important;
     font-size: 1.2rem;
 }
+
 #categories-table {
     border-collapse: separate;
     border-spacing: 1rem;
 }
+
 p {
     margin: 0;
 }
+
 .active-td {
     background-color: var(--bs-primary-bg-subtle) !important;
+}
+
+.card-body, img {
+    padding: 10%;
+}
+
+.in-development {
+    color: #1e1f22 !important;
+    background-color: #6c6c6c !important;
+    pointer-events: none;
+}
+
+.in-development > .card-body > a {
+    display: none;
 }
