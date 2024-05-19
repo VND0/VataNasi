@@ -43,16 +43,28 @@ def my_categories_page():
                            categories=db.get_categories_of_user(current_user.id))
 
 
-@bp.route("/my_words/<category>")
+@bp.route("/my_words/<category>", methods=["POST", "GET"])
 def my_words_page(category: str):
     if not current_user.is_authenticated:
         return redirect("/login")
-
     kwargs = {"category": category}
+
+    if request.method == "POST":
+        value = request.form.get("value")
+        translation = request.form.get("translation")
+        if not (value and translation):
+            kwargs["message"] = "Поля не должны быть пусты"
+        else:
+            try:
+                db.new_word(current_user.id, category, value, translation)
+            except ValueError as e:
+                kwargs["message"] = str(e)
+
     try:
         words_reprs = db.get_words_of_category(category, current_user.id)
         kwargs["words"] = words_reprs
     except ValueError as e:
-        kwargs["message"] = e
+        kwargs["message"] = str(e)
+        # return render_template("words_list_page.html", is_authenticated=current_user.is_authenticated, **kwargs)
 
     return render_template("words_list_page.html", is_authenticated=current_user.is_authenticated, **kwargs)

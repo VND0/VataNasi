@@ -1,0 +1,39 @@
+<div class="modal modal-lg fade" id="newModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Новое слово</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <div class="input-group">
+                        <span class="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px"
+                                 viewBox="0 -960 960 960" width="20px" fill="#000">
+                                <path d="m488-96 171-456h82L912-96h-79l-41-117H608L567-96h-79ZM169-216l-50-51 192-190q-36-38-67-79t-54-89h82q18 32 36 54.5t52 60.5q38-42 70-87.5t52-98.5H48v-72h276v-96h72v96h276v72H558q-21 69-61 127.5T409-457l91 90-28 74-112-112-191 189Zm463-63h136l-66-189-70 189Z"/>
+                            </svg>
+                        </span>
+                            <input type="text" class="form-control" placeholder="Оригинальное слово" name="value">
+                            <span class="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                                 fill="#000000">
+                                <path d="M630-444H192v-72h438L429-717l51-51 288 288-288 288-51-51 201-201Z"/>
+                            </svg>
+                        </span>
+                            <input type="text" class="form-control" placeholder="Перевод" name="translation">
+                        </div>
+                        <div class="form-text">Оригинальные слова не должны повторяться внутри одной категории.</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10"></div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Добавить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

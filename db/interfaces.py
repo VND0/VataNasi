@@ -120,3 +120,17 @@ class DataBase:
             words_objs: list[Word] = session.query(Word).filter(Word.category == category_obj).all()
             words_reprs = [f"{x.value} - {x.translation}" for x in words_objs]
             return words_reprs
+
+    def new_word(self, user_id: int, category_name: str, value: str, translation: str):
+        with self.Session() as session:
+            try:
+                category_obj: Category = session.query(Category).filter(Category.user_id == user_id).filter(
+                    Category.name == category_name).one()
+            except:
+                raise ValueError("Категории не существует.")
+
+            if value in [x.value for x in category_obj.words]:
+                raise ValueError("Слово уже существует в категории.")
+            word_obj = Word(value, translation, category_obj.id)
+            session.add(word_obj)
+            session.commit()
