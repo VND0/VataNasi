@@ -28,6 +28,8 @@ def handle_add_new_category_form() -> dict:
     new_name = request.form.get("new-category-name")
     if not new_name:
         return {"message": "Имя категории не может быть пустым."}
+    elif "/" in new_name:
+        return {"message": "Нельзя использовать знак '/' в названии категории."}
     user_id = current_user.id
     response = db.new_category(user_id, new_name)
     return {"message": response}

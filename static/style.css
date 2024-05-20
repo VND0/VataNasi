@@ -24,9 +24,9 @@ p {
 }
 
 .in-development {
-    color: #1e1f22 !important;
-    background-color: #6c6c6c !important;
+    filter: grayscale(1) brightness(50%);
     pointer-events: none;
+    user-select: none;
 }
 
 .in-development > .card-body > a {

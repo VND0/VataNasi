@@ -6,6 +6,7 @@ function onPageLoad() {
     const myWordsPage = "Список слов";
     const newTaskPage = "Новое задание";
     const changeAccountDataPage = "Управление аккаунтом";
+    const taskPreferencesPage = "Настройка задания";
 
     const partsOfURL = document.URL.split("/");
     const route = partsOfURL[partsOfURL.length - 1];
@@ -22,6 +23,8 @@ function onPageLoad() {
         document.getElementById("navbar-heading").innerText = newTaskPage;
     } else if (route === "change_account_data") {
         document.getElementById("navbar-heading").innerText = changeAccountDataPage;
+    } else if (partsOfURL[partsOfURL.length - 2] === "task-preferences") {
+        document.getElementById("navbar-heading").innerText = taskPreferencesPage;
     } else if (partsOfURL[partsOfURL.length - 2] === "my_words") {
         document.getElementById("navbar-heading").innerText = myWordsPage;
     } else {
