@@ -23,6 +23,10 @@ def handle_register_page():
             message = "Имя пользователя содержит недопустимые символы."
             return render_template("reg_page.html", add_message=True, type="warning", message=message,
                                    is_authenticated=current_user.is_authenticated)
+        elif not password.strip():
+            message = "Пустой пароль"
+            return render_template("reg_page.html", add_message=True, type="warning", message=message,
+                                   is_authenticated=current_user.is_authenticated)
         elif password != password_confirm:
             message = "Пароли не совпадают"
             return render_template("reg_page.html", add_message=True, type="warning", message=message,
