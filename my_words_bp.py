@@ -72,7 +72,7 @@ def my_words_page(category: str):
             except ValueError as e:
                 kwargs["message"] = str(e)
         if "message" not in kwargs:
-            return redirect(f"/my_words/{category}>")
+            return redirect(f"/my_words/{category}")
 
     try:
         words_reprs = db.get_words_of_category(category, current_user.id)
