@@ -2,6 +2,7 @@ from flask import redirect, Blueprint, render_template, request
 from flask_login import current_user
 
 from db.interfaces import DataBase
+from funcs import TaskPathData
 
 bp = Blueprint("tasks", __name__)
 db = DataBase("data.db")
@@ -19,7 +20,7 @@ def new_task_page():
 def preferences_page(mode: int):
     if not current_user.is_authenticated:
         return redirect("/login")
-    if mode != 0:
+    if mode != 1:
         return redirect("/new_task")
 
     categories_names = db.get_categories_of_user(current_user.id)
@@ -40,3 +41,56 @@ def preferences_page(mode: int):
             return redirect(f"/task/{mode}/{int(instant_check)}/{'/'.join(chosen_categories)}/{amount}")
 
     return render_template("mode_preferences_page.html", is_authenticated=current_user.is_authenticated, **kwargs)
+
+
+def parse_task_route(path: str) -> TaskPathData:
+    data = path.split("/")
+    instant_check = bool(int(data[0]))
+    words_amount = int(data[-1])
+    categories = data[1:-1]
+
+    if instant_check:
+        raise NotImplementedError
+    if words_amount < 0:
+        raise ValueError
+    if not categories:
+        raise ValueError
+
+    return TaskPathData(instant_check, words_amount, categories)
+
+
+@bp.route("/task/1/<path:path>", methods=["POST", "GET"])
+def typing_mode(path: str):
+    if not current_user.is_authenticated:
+        redirect("/")
+
+    data = parse_task_route(path)
+    words = set()
+    for c in data.categories:
+        words_objects = db.get_words_objects(current_user.id, c)
+        for w in words_objects:
+            words.add((w.value, w.translation))
+    words = list(words)[:(data.words_amount if data.words_amount else len(words))]
+
+    values = [w[0] for w in words]
+    translations = [w[1].lower() for w in words]
+
+    if request.method == "POST":
+        success = []
+        mistakes = []
+        for v, t in zip(values, translations):
+            v_got = request.form.get(v)
+            t_got = request.form.get(f"{v}-translation")
+
+            if t_got is None:
+                mistakes.append((v_got, "", translations[values.index(v_got)]))
+            elif t_got.lower() == translations[values.index(v_got)]:
+                success.append(v_got)
+            else:
+                mistakes.append((v_got, t_got, translations[values.index(v_got)]))
+
+        return render_template("result_page.html", is_authenticated=current_user.is_authenticated,
+                               correct_answers=success, wrong_answers=mistakes)
+
+    return render_template("typing_mode_page.html", is_authenticated=current_user.is_authenticated,
+                           values=values)

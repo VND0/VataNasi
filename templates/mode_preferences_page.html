@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container mt-5 d-flex">
+    <div class="container mt-5">
         <form method="post">
             <legend class="mb-3">Выберите категории</legend>
             <div id="categories" class="mb-5">
@@ -29,10 +29,10 @@
                     <input type="number" id="amount" class="form-control" placeholder="Все" name="amount">
                 </div>
             </div>
-            {% if message %}
-                <div class="alert alert-warning my-3" role="alert">{{ message }}</div>
-            {% endif %}
             <button type="submit" class="btn btn-primary">Начать выполнение</button>
         </form>
+        {% if message %}
+            <div class="alert alert-warning my-3" role="alert">{{ message }}</div>
+        {% endif %}
     </div>
 {% endblock %}

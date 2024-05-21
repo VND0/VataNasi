@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="my-5">
+            {% for ok in correct_answers %}
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                         fill="#198754">
+                        <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/>
+                    </svg>
+                    {{ ok }}
+                </p>
+            {% endfor %}
+        </div>
+        <div class="my-5">
+            {% for v, t_got, t_right in wrong_answers %}
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                         fill="#DC3545">
+                        <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/>
+                    </svg>
+                    {{ v }}
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px"
+                         fill="#000000">
+                        <path d="M630-444H192v-72h438L429-717l51-51 288 288-288 288-51-51 201-201Z"/>
+                    </svg>
+                    <span style="color: rgb(220, 53, 69); text-decoration: line-through">
+                        <span style="color: var(--bs-body-color)">{{ t_got }}</span>
+                    </span>
+                    {{ t_right }}
+                </p>
+            {% endfor %}
+        </div>
+        <div class="my-5">
+            <a class="btn btn-primary mb-2" id="again">Еще раз</a>
+            <a class="btn btn-secondary mb-2" href="/new-task">Другое задание</a>
+            <a class="btn btn-light mb-2" href="/">На главную</a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector("#again").href = document.URL;
+    </script>
+{% endblock %}

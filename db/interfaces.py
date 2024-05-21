@@ -142,3 +142,13 @@ class DataBase:
             word_obj = session.query(Word).filter(Word.category == category_obj).filter(Word.value == word).one()
             session.delete(word_obj)
             session.commit()
+
+    def get_words_objects(self, user_id: int, category_name: str) -> list[Word]:
+        with self.Session() as session:
+            category_obj = session.query(Category).filter(Category.user_id == user_id).filter(
+                Category.name == category_name).one_or_none()
+            if category_obj is None:
+                raise ValueError("Категории не существует.")
+
+            words_objs: list[Word] = session.query(Word).filter(Word.category == category_obj).all()
+            return words_objs

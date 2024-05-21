@@ -21,6 +21,7 @@ def del_word():
     category_name = data["category"]
     word = data["word"]
     db.del_word(current_user.id, category_name, word)
+    print(word, "deleted")
     return ""
 
 
@@ -51,7 +52,7 @@ def my_categories_page():
             return redirect("/my_categories")
 
     return render_template("categories_list_page.html", is_authenticated=current_user.is_authenticated, **kwargs,
-                           categories=db.get_categories_of_user(current_user.id))
+                           categories=sorted(db.get_categories_of_user(current_user.id)))
 
 
 @bp.route("/my_words/<category>", methods=["POST", "GET"])
@@ -73,7 +74,7 @@ def my_words_page(category: str):
 
     try:
         words_reprs = db.get_words_of_category(category, current_user.id)
-        kwargs["words"] = words_reprs
+        kwargs["words"] = sorted(words_reprs)
     except ValueError as e:
         kwargs["message"] = str(e)
 

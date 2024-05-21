@@ -7,6 +7,7 @@ function onPageLoad() {
     const newTaskPage = "Новое задание";
     const changeAccountDataPage = "Управление аккаунтом";
     const taskPreferencesPage = "Настройка задания";
+    const taskPage = "Задание";
 
     const partsOfURL = document.URL.split("/");
     const route = partsOfURL[partsOfURL.length - 1];
@@ -27,6 +28,8 @@ function onPageLoad() {
         document.getElementById("navbar-heading").innerText = taskPreferencesPage;
     } else if (partsOfURL[partsOfURL.length - 2] === "my_words") {
         document.getElementById("navbar-heading").innerText = myWordsPage;
+    } else if (partsOfURL[3] === "task") {
+        document.getElementById("navbar-heading").innerText = taskPage;
     } else {
         alert("Not implemented!");
     }
