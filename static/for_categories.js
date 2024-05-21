@@ -31,7 +31,7 @@ function delCategoryRequest(catName, deleted) {
         console.log(response.text());
     }).then((response) => {
         deleted.parentNode.remove();
-        location.reload();
+        window.location.replace(document.URL);
 
     })
 }

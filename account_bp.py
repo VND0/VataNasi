@@ -119,4 +119,5 @@ def change_account_data_page():
                 additional_kwargs["type"] = "success"
                 additional_kwargs["message"] = "Пароль успешно обновлен"
 
-    return render_template("edit_account.html", current_username=current_user.username, **additional_kwargs)
+    return render_template("edit_account.html", current_username=current_user.username, **additional_kwargs,
+                           is_authenticated=current_user.is_authenticated)
