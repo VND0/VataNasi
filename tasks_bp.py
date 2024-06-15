@@ -1,8 +1,8 @@
 from flask import redirect, Blueprint, render_template, request
 from flask_login import current_user
 
+import funcs
 from db.interfaces import DataBase
-from funcs import TaskPathData
 
 bp = Blueprint("tasks", __name__)
 db = DataBase("data.db")
@@ -38,33 +38,21 @@ def preferences_page(mode: int):
             kwargs["message"] = "Неверный формат введенного числа"
         else:
             amount = 0 if not amount_raw else int(amount_raw)
-            return redirect(f"/task/{mode}/{int(instant_check)}/{'/'.join(chosen_categories)}/{amount}")
+            return redirect(
+                f"/task/{mode}?ic={int(instant_check)}{''.join(f'&cat={c}' for c in chosen_categories)}&amount={amount}"
+            )
 
     return render_template("mode_preferences_page.html", is_authenticated=current_user.is_authenticated, **kwargs)
 
 
-def parse_task_route(path: str) -> TaskPathData:
-    data = path.split("/")
-    instant_check = bool(int(data[0]))
-    words_amount = int(data[-1])
-    categories = data[1:-1]
-
-    if instant_check:
-        raise NotImplementedError
-    if words_amount < 0:
-        raise ValueError
-    if not categories:
-        raise ValueError
-
-    return TaskPathData(instant_check, words_amount, categories)
 
 
-@bp.route("/task/1/<path:path>", methods=["POST", "GET"])
-def typing_mode(path: str):
+@bp.route("/task/1", methods=["POST", "GET"])
+def typing_mode():
     if not current_user.is_authenticated:
         redirect("/")
 
-    data = parse_task_route(path)
+    data = funcs.parse_task1_args(request.args)
     words = set()
     for c in data.categories:
         words_objects = db.get_words_objects(current_user.id, c)
