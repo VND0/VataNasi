@@ -8,6 +8,25 @@ bp = Blueprint("account", __name__)
 db = DataBase("data.db")
 
 
+def check_valid_registration_data(username: str, password: str, password_confirm: str) -> str | None:
+    if not username.isalnum():
+        message = "Имя пользователя содержит недопустимые символы."
+        return render_template("reg_page.html", add_message=True, type="warning", message=message,
+                               is_authenticated=current_user.is_authenticated)
+    elif not password.strip():
+        message = "Пустой пароль"
+        return render_template("reg_page.html", add_message=True, type="warning", message=message,
+                               is_authenticated=current_user.is_authenticated)
+    elif password != password_confirm:
+        message = "Пароли не совпадают"
+        return render_template("reg_page.html", add_message=True, type="warning", message=message,
+                               is_authenticated=current_user.is_authenticated)
+    elif not db.is_username_free(username):
+        message = "Имя пользователя занято."
+        return render_template("reg_page.html", add_message=True, type="warning", message=message,
+                               is_authenticated=current_user.is_authenticated)
+
+
 @bp.route("/register", methods=["POST", "GET"])
 def handle_register_page():
     if current_user.is_authenticated:
@@ -18,23 +37,10 @@ def handle_register_page():
         password = request.form.get("password")
         password_confirm = request.form.get("password_confirm")
         password_hash = passd_to_hash(password)
+        data_validation_failure = check_valid_registration_data(username, password, password_confirm)
+        if data_validation_failure is not None:
+            return data_validation_failure
 
-        if not username.isalnum():
-            message = "Имя пользователя содержит недопустимые символы."
-            return render_template("reg_page.html", add_message=True, type="warning", message=message,
-                                   is_authenticated=current_user.is_authenticated)
-        elif not password.strip():
-            message = "Пустой пароль"
-            return render_template("reg_page.html", add_message=True, type="warning", message=message,
-                                   is_authenticated=current_user.is_authenticated)
-        elif password != password_confirm:
-            message = "Пароли не совпадают"
-            return render_template("reg_page.html", add_message=True, type="warning", message=message,
-                                   is_authenticated=current_user.is_authenticated)
-        elif not db.is_username_free(username):
-            message = "Имя пользователя занято."
-            return render_template("reg_page.html", add_message=True, type="warning", message=message,
-                                   is_authenticated=current_user.is_authenticated)
         try:
             db.new_user(username, password_hash)
         except Exception as e:
@@ -51,6 +57,15 @@ def handle_register_page():
                            is_authenticated=current_user.is_authenticated)
 
 
+def check_valid_login_data(username: str, password: str) -> str | None:
+    if not username:
+        return render_template("auth_page.html", add_message=True, type="warning",
+                               message="Поле логина пустое", is_authenticated=current_user.is_authenticated)
+    if not password:
+        return render_template("auth_page.html", add_message=True, type="warning",
+                               message="Поле пароля пустое", is_authenticated=current_user.is_authenticated)
+
+
 @bp.route("/login", methods=["GET", "POST"])
 def handle_login_page():
     if current_user.is_authenticated:
@@ -61,12 +76,9 @@ def handle_login_page():
         password = request.form.get("password").strip()
         password_hash = passd_to_hash(password)
 
-        if not username:
-            return render_template("auth_page.html", add_message=True, type="warning",
-                                   message="Поле логина пустое", is_authenticated=current_user.is_authenticated)
-        if not password:
-            return render_template("auth_page.html", add_message=True, type="warning",
-                                   message="Поле пароля пустое", is_authenticated=current_user.is_authenticated)
+        data_validation_failure = check_valid_login_data(username, password)
+        if data_validation_failure is not None:
+            return data_validation_failure
 
         user = db.get_user_by_username(username)
         if user is None or user.password_hash != password_hash:
