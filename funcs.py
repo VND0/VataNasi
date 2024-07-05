@@ -25,4 +25,3 @@ def parse_task1_args(args) -> TaskPathData:
         raise ValueError
 
     return TaskPathData(instant_check, words_amount, categories)
-

@@ -45,8 +45,6 @@ def preferences_page(mode: int):
     return render_template("mode_preferences_page.html", is_authenticated=current_user.is_authenticated, **kwargs)
 
 
-
-
 @bp.route("/task/1", methods=["POST", "GET"])
 def typing_mode():
     if not current_user.is_authenticated:
