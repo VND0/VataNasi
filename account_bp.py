@@ -43,7 +43,7 @@ def handle_register_page():
             return render_template("reg_page.html", add_message=True, type="danger", message=message,
                                    is_authenticated=current_user.is_authenticated)
 
-        added_user = db.get_user(username, password_hash)  # Здесь пользователь гарантированно существует.
+        added_user = db.get_user_by_username(username, password_hash)  # Здесь пользователь гарантированно существует.
         login_user(added_user)  # TODO: оптимизировать двойной запрос
         return redirect("/")
 
@@ -68,7 +68,7 @@ def handle_login_page():
             return render_template("auth_page.html", add_message=True, type="warning",
                                    message="Поле пароля пустое", is_authenticated=current_user.is_authenticated)
 
-        user = db.get_user(username, password_hash)
+        user = db.get_user_by_username(username, password_hash)
         if user is None:
             return render_template("auth_page.html", add_message=True, type="warning",
                                    message="Неверные имя пользователя или пароль.",

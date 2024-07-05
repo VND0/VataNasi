@@ -14,7 +14,7 @@ login_manager = LoginManager(app)
 
 @login_manager.user_loader
 def load_user(user_id: int):
-    return db.select_user_by_id(user_id)
+    return db.get_user_by_id(user_id)
 
 
 @app.route("/")

@@ -75,7 +75,8 @@ def my_words_page(category: str):
             return redirect(f"/my_words/{category}")
 
     try:
-        words_reprs = db.get_words_of_category(category, current_user.id)
+        words_objects = db.get_words_objects(current_user.id, category)
+        words_reprs = [f"{x.value} - {x.translation}" for x in words_objects]
         kwargs["words"] = sorted(words_reprs)
     except ValueError as e:
         kwargs["message"] = str(e)

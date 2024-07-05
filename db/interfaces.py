@@ -55,7 +55,7 @@ class DataBase:
         finally:
             session.close()
 
-    def get_user(self, username: str, password_hash: str) -> User | None:
+    def get_user_by_username(self, username: str, password_hash: str) -> User | None:
         session = self.Session()
         try:
             return session.query(User).filter(User.username == username).filter(
@@ -63,7 +63,7 @@ class DataBase:
         finally:
             session.close()
 
-    def select_user_by_id(self, id: int) -> User | None:
+    def get_user_by_id(self, id: int) -> User | None:
         session = self.Session()
         try:
             return session.query(User).filter(User.id == id).one()
@@ -109,17 +109,6 @@ class DataBase:
             session.add(new_category)
             session.commit()
             return ""
-
-    def get_words_of_category(self, category: str, user_id: int) -> list[str]:
-        with self.Session() as session:
-            category_obj = session.query(Category).filter(Category.user_id == user_id).filter(
-                Category.name == category).one_or_none()
-            if category_obj is None:
-                raise ValueError("Категории не существует.")
-
-            words_objs: list[Word] = session.query(Word).filter(Word.category == category_obj).all()
-            words_reprs = [f"{x.value} - {x.translation}" for x in words_objs]
-            return words_reprs
 
     def new_word(self, user_id: int, category_name: str, value: str, translation: str):
         with self.Session() as session:
