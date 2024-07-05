@@ -23,12 +23,9 @@ class DataBase:
         Проверка того, что имя пользователя не занято.
         :param username: новое имя пользователя
         """
-        session = self.Session()
-        try:
+        with self.Session() as session:
             all_users = list(session.query(User).filter(User.username == username).all())
             return not all_users
-        finally:
-            session.close()
 
     def new_user(self, username: str, password_hash: str) -> int:
         """
@@ -37,14 +34,11 @@ class DataBase:
         :param password_hash: хэш пароля нового пользователя
         :return: id нового пользователя в БД
         """
-        session = self.Session()
-        try:
+        with self.Session() as session:
             new_user = User(username, password_hash)
             session.add(new_user)
             session.commit()
             return new_user.id
-        finally:
-            session.close()
 
     def get_categories_of_user(self, user_id: int) -> list[str]:
         """
@@ -52,12 +46,9 @@ class DataBase:
         :param user_id: id пользователя, к которому относятся категории
         :return: итератор строк БД
         """
-        session = self.Session()
-        try:
+        with self.Session() as session:
             categories = session.query(Category).filter(Category.user_id == user_id).all()
             return [x.name for x in categories]
-        finally:
-            session.close()
 
     def get_user_by_username(self, username: str) -> User | None:
         """
@@ -65,11 +56,8 @@ class DataBase:
         :param: username: имя пользователя
         :return: объект User или None, если пользователь не найден
         """
-        session = self.Session()
-        try:
+        with self.Session() as session:
             return session.query(User).filter(User.username == username).one_or_none()
-        finally:
-            session.close()
 
     def get_user_by_id(self, user_id: int) -> User | None:
         """
@@ -77,11 +65,8 @@ class DataBase:
         :param user_id: id пользователя
         :return: объект User или None, если пользователь не найден
         """
-        session = self.Session()
-        try:
+        with self.Session() as session:
             return session.query(User).filter(User.id == user_id).one()
-        finally:
-            session.close()
 
     def delete_user(self, username: str) -> None:
         """
