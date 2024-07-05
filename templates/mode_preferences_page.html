@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
+    <div class="container mt-5 align-items-center d-flex flex-column">
         <form method="post">
             <legend class="mb-3">Выберите категории</legend>
             <div id="categories" class="mb-5">
@@ -15,11 +15,6 @@
                         <label class="form-check-label">{{ cat_name }}</label>
                     </div>
                 {% endfor %}
-            </div>
-            <div class="form-check form-switch mb-3">
-                <input class="form-check-input" type="checkbox" role="switch" id="check-type" name="check_type"
-                       disabled>
-                <label class="form-check-label" for="check-type">Мгновенная проверка</label>
             </div>
             <div class="row mb-5">
                 <div class="col-auto">
