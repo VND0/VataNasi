@@ -1,3 +1,5 @@
+import random
+
 from flask import redirect, Blueprint, render_template, request
 from flask_login import current_user
 
@@ -12,6 +14,8 @@ db = DataBase("data.db")
 def new_task_page():
     if not current_user.is_authenticated:
         return redirect("/login")
+    if not db.get_categories_of_user(current_user.id):
+        return redirect("/my_categories")
 
     return render_template("choose_tasks_page.html", is_authenticated=current_user.is_authenticated)
 
@@ -20,6 +24,8 @@ def new_task_page():
 def preferences_page(mode: int):
     if not current_user.is_authenticated:
         return redirect("/login")
+    if not db.get_categories_of_user(current_user.id):
+        return redirect("/my_categories")
     if mode != 1:
         return redirect("/new_task")
 
@@ -48,24 +54,32 @@ def preferences_page(mode: int):
 @bp.route("/task/1", methods=["POST", "GET"])
 def typing_mode():
     if not current_user.is_authenticated:
-        redirect("/")
+        return redirect("/")
+    if not db.get_categories_of_user(current_user.id):
+        return redirect("/my_categories")
 
     data = funcs.parse_task1_args(request.args)
     words = set()
     for c in data.categories:
         words_objects = db.get_words_objects(current_user.id, c)
         for w in words_objects:
-            words.add((w.value, w.translation))
-    words = list(words)[:(data.words_amount if data.words_amount else len(words))]
+            words.add((w.value, w.translation.lower()))
 
-    values = [w[0] for w in words]
-    translations = [w[1].lower() for w in words]
+    # Костыль, чтобы заработал рандом
+    words = list(words)
+    words_all = words.copy()
+    random.shuffle(words)
+    words = words[:(data.words_amount if data.words_amount else len(words))]
+    values = [w[0] for w in words_all]
+    translations = [w[1] for w in words_all]
 
     if request.method == "POST":
         success = []
         mistakes = []
-        for v, t in zip(values, translations):
+        for v in values:
             v_got = request.form.get(v)
+            if v_got is None:
+                continue  # Не все слова попадут из-за рандома и выбора количества
             t_got = request.form.get(f"{v}-translation")
 
             if t_got is None:
@@ -79,4 +93,4 @@ def typing_mode():
                                correct_answers=success, wrong_answers=mistakes)
 
     return render_template("typing_mode_page.html", is_authenticated=current_user.is_authenticated,
-                           values=values)
+                           values=[w[0] for w in words])
