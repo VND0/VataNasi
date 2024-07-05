@@ -31,7 +31,7 @@ def handle_register_page():
             message = "Пароли не совпадают"
             return render_template("reg_page.html", add_message=True, type="warning", message=message,
                                    is_authenticated=current_user.is_authenticated)
-        elif not db.is_username_new(username):
+        elif not db.is_username_free(username):
             message = "Имя пользователя занято."
             return render_template("reg_page.html", add_message=True, type="warning", message=message,
                                    is_authenticated=current_user.is_authenticated)
@@ -43,8 +43,8 @@ def handle_register_page():
             return render_template("reg_page.html", add_message=True, type="danger", message=message,
                                    is_authenticated=current_user.is_authenticated)
 
-        added_user = db.get_user_by_username(username, password_hash)  # Здесь пользователь гарантированно существует.
-        login_user(added_user)  # TODO: оптимизировать двойной запрос
+        added_user = db.get_user_by_username(username)  # Здесь пользователь гарантированно существует.
+        login_user(added_user)
         return redirect("/")
 
     return render_template("reg_page.html", add_message=False,
@@ -68,8 +68,8 @@ def handle_login_page():
             return render_template("auth_page.html", add_message=True, type="warning",
                                    message="Поле пароля пустое", is_authenticated=current_user.is_authenticated)
 
-        user = db.get_user_by_username(username, password_hash)
-        if user is None:
+        user = db.get_user_by_username(username)
+        if user is None or user.password_hash != password_hash:
             return render_template("auth_page.html", add_message=True, type="warning",
                                    message="Неверные имя пользователя или пароль.",
                                    is_authenticated=current_user.is_authenticated)

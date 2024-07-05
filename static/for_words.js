@@ -16,13 +16,14 @@ words.forEach((elem) => {
     elem.addEventListener("click", oneClick);
 })
 
-function delWordRequest(wordName, deleted) {
+function delWordRequest(wordName, wordTranslation, deleted) {
     const url = document.URL.split("/");
     const promise = fetch("/del-word", {
         method: "POST",
         body: JSON.stringify({
             "category": url[url.length - 1],
-            "word": wordName
+            "word": wordName,
+            "translation": wordTranslation
         }),
         headers: {
             "Content-Type": "application/json;charset=utf-8"
@@ -39,7 +40,7 @@ document.querySelector("#delete").addEventListener("click", (event) => {
     const words = document.querySelectorAll(".element-in-td");
     for (const w of words) {
         if (w.classList.contains("active-td")) {
-            delWordRequest(w.innerText.split(" - ")[0], w);
+            delWordRequest(w.innerText.split(" - ")[0], w.innerText.split(" - ")[1], w);
         }
     }
 });

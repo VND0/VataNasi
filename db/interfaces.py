@@ -18,7 +18,11 @@ class DataBase:
     def create_tables_if_not_exist(self) -> None:
         Base.metadata.create_all(self.engine)
 
-    def is_username_new(self, username: str) -> bool:
+    def is_username_free(self, username: str) -> bool:
+        """
+        Проверка того, что имя пользователя не занято.
+        :param username: новое имя пользователя
+        """
         session = self.Session()
         try:
             all_users = list(session.query(User).filter(User.username == username).all())
@@ -55,22 +59,35 @@ class DataBase:
         finally:
             session.close()
 
-    def get_user_by_username(self, username: str, password_hash: str) -> User | None:
+    def get_user_by_username(self, username: str) -> User | None:
+        """
+        Получение объекта User по имени пользователя.
+        :param: username: имя пользователя
+        :return: объект User или None, если пользователь не найден
+        """
         session = self.Session()
         try:
-            return session.query(User).filter(User.username == username).filter(
-                User.password_hash == password_hash).one_or_none()
+            return session.query(User).filter(User.username == username).one_or_none()
         finally:
             session.close()
 
-    def get_user_by_id(self, id: int) -> User | None:
+    def get_user_by_id(self, user_id: int) -> User | None:
+        """
+        Получение объекта User по User.id.
+        :param user_id: id пользователя
+        :return: объект User или None, если пользователь не найден
+        """
         session = self.Session()
         try:
-            return session.query(User).filter(User.id == id).one()
+            return session.query(User).filter(User.id == user_id).one()
         finally:
             session.close()
 
     def delete_user(self, username: str) -> None:
+        """
+        Удаление пользователя и всех его данных.
+        :param username: имя пользователя
+        """
         with self.Session() as session:
             user = session.query(User).filter(User.username == username).one()
             categories = session.query(Category).filter(Category.user == user).all()
@@ -84,11 +101,21 @@ class DataBase:
             session.commit()
 
     def change_passwd(self, username: str, new_passwd_hash: str) -> None:
+        """
+        Изменение хэша пароля, хранящегося в БД.
+        :param username: имя пользователя
+        :param new_passwd_hash: хэш нового пароля
+        """
         with self.Session() as session:
             session.query(User).filter(User.username == username).update({User.password_hash: new_passwd_hash})
             session.commit()
 
     def delete_category(self, user_id: int, category_name: str) -> None:
+        """
+        Удаление категории и всех слов в ней.
+        :param user_id: id пользовтаеля
+        :param category_name: имя категории
+        """
         with (self.Session() as session):
             category = session.query(Category).filter(Category.user_id == user_id).filter(
                 Category.name == category_name).one()
@@ -98,19 +125,30 @@ class DataBase:
             session.delete(category)
             session.commit()
 
-    def new_category(self, user_id: int, category_name: str) -> str:
+    def new_category(self, user_id: int, category_name: str) -> None:
+        """
+        Создание новой категории
+        :param user_id: id пользователя
+        :param category_name: название новой категории
+        """
         with self.Session() as session:
             already_existing = session.query(Category).filter(Category.user_id == user_id).filter(
                 Category.name == category_name).one_or_none()
             if not (already_existing is None):
-                return "Такая категория уже существует"
+                raise ValueError("Такая категория уже существует")
 
             new_category = Category(category_name, user_id)
             session.add(new_category)
             session.commit()
-            return ""
 
-    def new_word(self, user_id: int, category_name: str, value: str, translation: str):
+    def new_word(self, user_id: int, category_name: str, value: str, translation: str) -> None:
+        """
+        Добавление новой пары слов.
+        :param user_id: id пользователя
+        :param category_name: имя категории
+        :param value: слово
+        :param translation: перевод
+        """
         with self.Session() as session:
             try:
                 category_obj: Category = session.query(Category).filter(Category.user_id == user_id).filter(
@@ -124,15 +162,29 @@ class DataBase:
             session.add(word_obj)
             session.commit()
 
-    def del_word(self, user_id: int, category_name: int, word: str):
-        with self.Session() as session:
+    def del_word(self, user_id: int, category_name: int, word: str, translation: str) -> None:
+        """
+        Удалить пару слов из категории.
+        :param user_id: id пользователя
+        :param category_name: название категории
+        :param word: слово
+        :param translation: перевод
+        """
+        with (self.Session() as session):
             category_obj = session.query(Category).filter(Category.user_id == user_id).filter(
                 Category.name == category_name).one()
-            word_obj = session.query(Word).filter(Word.category == category_obj).filter(Word.value == word).one()
+            word_obj = session.query(Word).filter(Word.category == category_obj).filter(Word.value == word).filter(
+                Word.translation == translation).one()
             session.delete(word_obj)
             session.commit()
 
     def get_words_objects(self, user_id: int, category_name: str) -> list[Word]:
+        """
+        Получить объекты Word, принадлежащие определенной категории определенного пользователя.
+        :param user_id: id пользователя
+        :param category_name: название категории
+        :return: список объектов Word.
+        """
         with self.Session() as session:
             category_obj = session.query(Category).filter(Category.user_id == user_id).filter(
                 Category.name == category_name).one_or_none()

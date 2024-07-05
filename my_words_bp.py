@@ -20,7 +20,8 @@ def del_word():
     data = request.get_json()
     category_name = data["category"]
     word = data["word"]
-    db.del_word(current_user.id, category_name, word)
+    translation = data["translation"]
+    db.del_word(current_user.id, category_name, word, translation)
     print(word, "deleted")
     return ""
 
@@ -32,8 +33,11 @@ def handle_add_new_category_form() -> dict:
     elif "/" in new_name:
         return {"message": "Нельзя использовать знак '/' в названии категории."}
     user_id = current_user.id
-    response = db.new_category(user_id, new_name)
-    return {"message": response}
+    try:
+        db.new_category(user_id, new_name)
+        return {"message": ""}
+    except ValueError as e:
+        return {"message": e.args[0] if e.args else "Произошла неизвестная ошибка."}
 
 
 @bp.route("/my_categories", methods=["POST", "GET"])
