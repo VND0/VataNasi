@@ -1,5 +1,6 @@
 from flask import redirect, Blueprint, render_template, request
 from flask_login import current_user, login_required
+import urllib.parse
 
 from db.interfaces import DataBase
 
@@ -11,7 +12,7 @@ db = DataBase("data.db")
 @bp.route("/del-category", methods=["POST"])
 def del_category():
     category_name = request.get_json()
-    db.delete_category(current_user.id, category_name["category_name"])
+    db.delete_category(current_user.id, urllib.parse.unquote(category_name["category_name"]))
     return ""
 
 
@@ -21,7 +22,8 @@ def del_word():
     category_name = data["category"]
     word = data["word"]
     translation = data["translation"]
-    db.del_word(current_user.id, category_name, word, translation)
+    db.del_word(current_user.id, urllib.parse.unquote(category_name),
+                urllib.parse.unquote(word), urllib.parse.unquote(translation))
     print(word, "deleted")
     return ""
 
@@ -34,7 +36,7 @@ def handle_add_new_category_form() -> dict:
         return {"message": "Нельзя использовать знак '/' в названии категории."}
     user_id = current_user.id
     try:
-        db.new_category(user_id, new_name)
+        db.new_category(user_id, urllib.parse.unquote(new_name))
         return {"message": ""}
     except ValueError as e:
         return {"message": e.args[0] if e.args else "Произошла неизвестная ошибка."}
@@ -72,7 +74,8 @@ def my_words_page(category: str):
             kwargs["message"] = "Поля не должны быть пусты"
         else:
             try:
-                db.new_word(current_user.id, category, value, translation)
+                db.new_word(current_user.id, urllib.parse.unquote(category),
+                            urllib.parse.unquote(value), urllib.parse.unquote(translation))
             except ValueError as e:
                 kwargs["message"] = str(e)
         if "message" not in kwargs:
