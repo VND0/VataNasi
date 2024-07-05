@@ -42,7 +42,8 @@ def preferences_page(mode: int):
         else:
             amount = 0 if not amount_raw else int(amount_raw)
             return redirect(
-                f"/task/{mode}?ic={0}{''.join(f'&cat={c}' for c in chosen_categories)}&amount={amount}"
+                # f"/task/{mode}?ic={0}{''.join(f'&cat={c}' for c in chosen_categories)}&amount={amount}"
+                f"/task/{mode}?{'&'.join(f'cat={c}' for c in chosen_categories)}&amount={amount}"
             )
 
     # TODO: поправить костыль с instant check (которой больше нет)
