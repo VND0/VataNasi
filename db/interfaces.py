@@ -44,7 +44,7 @@ class DataBase:
         """
         Получение категорий слов, относящихся к конкретному пользователю.
         :param user_id: id пользователя, к которому относятся категории
-        :return: итератор строк БД
+        :return: список строк БД
         """
         with self.Session() as session:
             categories = session.query(Category).filter(Category.user_id == user_id).all()
@@ -147,7 +147,7 @@ class DataBase:
             session.add(word_obj)
             session.commit()
 
-    def del_word(self, user_id: int, category_name: int, word: str, translation: str) -> None:
+    def del_word(self, user_id: int, category_name: str, word: str, translation: str) -> None:
         """
         Удалить пару слов из категории.
         :param user_id: id пользователя
