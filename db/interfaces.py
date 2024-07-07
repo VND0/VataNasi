@@ -66,7 +66,7 @@ class DataBase:
         :return: объект User или None, если пользователь не найден
         """
         with self.Session() as session:
-            return session.query(User).filter(User.id == user_id).one()
+            return session.query(User).filter(User.id == user_id).one_or_none()
 
     def delete_user(self, username: str) -> None:
         """
