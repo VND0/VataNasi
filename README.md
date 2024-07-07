@@ -35,3 +35,8 @@ echo "Your OWN AND VERY COMPLICATED secret key" > secret_key.txt
 docker run -p 80:80 -v "$(pwd)/secret_key.txt:/app/secret_key.txt" \
 -v "$(pwd)/data.db:/app/data.db" -i vata-nasi
 ```
+```bash
+# Запуск в дальнейшем
+docker container run -p 80:80 -v "$(pwd)/secret_key.txt:/app/secret_key.txt" \
+-v "$(pwd)/data.db:/app/data.db" vata-nasi
+```
